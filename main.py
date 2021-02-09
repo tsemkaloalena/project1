@@ -12,7 +12,7 @@ import os
 class OpenForm(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('open.ui', self)
+        uic.loadUi('data/UI/open.ui', self)
         self.setWindowTitle('Открытие')
         self.name_btn.clicked.connect(self.open_second_form)
 
@@ -34,13 +34,13 @@ class OpenForm(QMainWindow):
 class HistoryForm(QWidget):
     def __init__(self, *f):
         super().__init__()
-        uic.loadUi('changedfiles.ui', self)
+        uic.loadUi('data/UI/changedfiles.ui', self)
         self.setWindowTitle('История соханений')
         sp = "SELECT name, date FROM pictures ORDER BY id DESC"
         self.show_files(sp)
 
     def show_files(self, sp):
-        con = sqlite3.connect('history.db')
+        con = sqlite3.connect('data/history.db')
         cur = con.cursor()
         result = cur.execute(sp).fetchall()
         title = ['Имя файла', 'Дата']
@@ -58,7 +58,7 @@ class HistoryForm(QWidget):
 class RedactorForm(QWidget):
     def __init__(self, *names):
         super().__init__()
-        uic.loadUi('redactor.ui', self)
+        uic.loadUi('data/UI/redactor.ui', self)
         self.setWindowTitle('Редактор')
 
         self.filename = names[-2]
@@ -90,7 +90,7 @@ class RedactorForm(QWidget):
             im.save(new_name)
 
             date = datetime.datetime.now().strftime("%d.%m.%Y  %H:%M")
-            con = sqlite3.connect('history.db')
+            con = sqlite3.connect('data/history.db')
             cur = con.cursor()
             cur.execute(f"INSERT INTO pictures(name, date) VALUES('{new_name}', '{date}')").fetchall()
             con.commit()
@@ -102,7 +102,7 @@ class RedactorForm(QWidget):
         im.save(self.filename)
 
         date = datetime.datetime.now().strftime("%d.%m.%Y  %H:%M")
-        con = sqlite3.connect('history.db')
+        con = sqlite3.connect('data/history.db')
         cur = con.cursor()
         cur.execute(f"INSERT INTO pictures(name, date) VALUES('{self.filename}', '{date}')").fetchall()
         con.commit()
@@ -182,7 +182,7 @@ class RedactorForm(QWidget):
 class ContrastForm(QWidget):
     def __init__(self, *names):
         super().__init__()
-        uic.loadUi('contrast.ui', self)
+        uic.loadUi('data/UI/contrast.ui', self)
         self.setWindowTitle('Контрастность')
 
         self.contrast_filename = names[-1]
@@ -249,7 +249,7 @@ class ContrastForm(QWidget):
 class SharpForm(QWidget):
     def __init__(self, *names):
         super().__init__()
-        uic.loadUi('sharp.ui', self)
+        uic.loadUi('data/UI/sharp.ui', self)
         self.setWindowTitle('Резкость')
 
         self.sharp_filename = names[-1]
@@ -292,7 +292,7 @@ class SharpForm(QWidget):
 class BlurForm(QWidget):
     def __init__(self, *names):
         super().__init__()
-        uic.loadUi('blur.ui', self)
+        uic.loadUi('data/UI/blur.ui', self)
         self.setWindowTitle('Размытие')
 
         self.blur_filename = names[-1]
@@ -335,7 +335,7 @@ class BlurForm(QWidget):
 class BrightnessForm(QWidget):
     def __init__(self, *names):
         super().__init__()
-        uic.loadUi('brightness.ui', self)
+        uic.loadUi('data/UI/brightness.ui', self)
         self.setWindowTitle('Яркость')
 
         self.bright_filename = names[-1]
@@ -396,7 +396,7 @@ class BrightnessForm(QWidget):
 class QuantizeForm(QWidget):
     def __init__(self, *names):
         super().__init__()
-        uic.loadUi('quantize.ui', self)
+        uic.loadUi('data/UI/quantize.ui', self)
         self.setWindowTitle('Уменьшение количества цветов')
 
         self.quantize_filename = names[-1]
@@ -440,7 +440,7 @@ class QuantizeForm(QWidget):
 class BlackAndWhiteForm(QWidget):
     def __init__(self, *names):
         super().__init__()
-        uic.loadUi('bw.ui', self)
+        uic.loadUi('data/UI/bw.ui', self)
         self.setWindowTitle('Чёрно-белое изображение')
 
         self.bw_filename = names[-1]
